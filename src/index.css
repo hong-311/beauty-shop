@@ -1,0 +1,5 @@
+*{ padding: 0; margin: 0; color: #fff; }
+body{ background-color: #000; }
+
+li{ list-style: none; } /* 리스트 표시 지움 */
+a{ text-decoration: none; }
