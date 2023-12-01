@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BestItem from './BestItem';
+import styled from 'styled-components';
+
+const BestListBlock = styled.ul`
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 30px;
+`;
 
 function BestList({ bests, onToggle }) {
   return (
-    <ul>
+    <BestListBlock>
       {bests.map((best) => (
         <li key={best.id}>
           <Link to={`/${best.id}`}>
@@ -20,7 +27,7 @@ function BestList({ bests, onToggle }) {
           </Link>
         </li>
       ))}
-    </ul>
+    </BestListBlock>
   );
 }
 
