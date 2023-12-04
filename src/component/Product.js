@@ -1,8 +1,8 @@
-// Product.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { initialBests } from './BestData';
 import styled from 'styled-components';
+import CartAlert from './cart/CartAlert';
 
 const ProductBlock = styled.div`
   padding: 16px;
@@ -85,34 +85,58 @@ const AddToCartButton = styled.button`
 
 function Product({ cartItems, setCartItems }) {
   const { id } = useParams();
-  const selectedProduct = initialBests.find((product) => product.id === parseInt(id));
+  const product = initialBests.find((p) => p.id === parseInt(id));
 
-  const { name, image, descript, price } = selectedProduct;
+  const { name, image, descript, price } = product;
 
-  const [count, setCount] = useState(1);
+  // 장바구니에 이미 있는 상품이면 해당 상품의 수량을, 없으면 기본값 1로 초기화
+  const existingItem = cartItems.find((item) => item.id === product.id);
+  const initialCount = existingItem ? existingItem.quantity : 1;
 
+  const [count, setCount] = useState(initialCount);
+
+  // 상품 수량 조절 함수
   const handleCount = (type) => {
     if (type === 'plus') {
-      setCount(count + 1);
+      setCount((prevCount) => prevCount + 1);
     } else {
+      // 수량이 1 이상일 때만 감소하도록 처리
       if (count === 1) return;
-      setCount(count - 1);
+      setCount((prevCount) => prevCount - 1);
     }
   };
 
-  const totalAmount = price * count;
+  const totalAmount = price * count; // 총 가격 계산
 
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+
+  // 장바구니에 상품 추가 함수
   const handleAddToCart = () => {
-    const productToAdd = {
-      id: selectedProduct.id,
-      name: selectedProduct.name,
-      image: selectedProduct.image,
-      price: selectedProduct.price,
-      quantity: count,
-    };
+    const existingItem = cartItems.find((item) => item.id === product.id);
 
-    setCartItems((prevCartItems) => [...prevCartItems, productToAdd]);
-    console.log('상품이 장바구니에 추가되었습니다:', productToAdd);
+    if (existingItem) {
+      // 이미 장바구니에 있는 상품이면 수량을 업데이트
+      const updatedItems = cartItems.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + count } : item
+      );
+      setCartItems(updatedItems);
+    } else {
+      // 장바구니에 없는 상품이면 새로 추가
+      const newItem = {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: count,
+      };
+      setCartItems((prevItems) => [...prevItems, newItem]);
+    }
+
+    setIsAddedToCart(true);
+
+    setTimeout(() => {
+      setIsAddedToCart(false);
+    }, 3000);
   };
 
   return (
@@ -135,6 +159,7 @@ function Product({ cartItems, setCartItems }) {
           장바구니에 추가
         </AddToCartButton>
       </ButtonsBlock>
+      {isAddedToCart && <CartAlert />}
     </ProductBlock>
   );
 }
