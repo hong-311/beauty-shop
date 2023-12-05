@@ -152,7 +152,7 @@ function Product({ cartItems, setCartItems }) {
         <span>{count}</span>
         <button onClick={() => handleCount('plus')}>+</button>
       </QuantityBlock>
-      <TotalBlock>총 수량: ￦ {totalAmount.toLocaleString()}</TotalBlock>
+      <TotalBlock>총 상품 금액: ￦ {totalAmount.toLocaleString()}</TotalBlock>
       <ButtonsBlock>
         <BuyNowButton className="buy-now">바로구매</BuyNowButton>
         <AddToCartButton className="add-to-cart" onClick={handleAddToCart}>
