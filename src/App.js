@@ -22,7 +22,7 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      <Header cartItems={cartItems}/>
       <BestBox>
         <Routes>
           <Route
