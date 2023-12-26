@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { MdDelete } from "react-icons/md";
+import { FiShoppingCart } from 'react-icons/fi'; 
+import ShoppingCartHeader from './ShoppingCartHeader';
 
 const ShoppingCartBlock = styled.div`
   padding: 16px;
@@ -31,6 +33,7 @@ const ShoppingCartBlock = styled.div`
         width: 120px;
         height: 120px;
         margin-right: 8px;
+        border-radius: 5px;
     }
     
     p {
@@ -96,12 +99,6 @@ function ShoppingCart({ cartItems, handleCount, onCheckout }) {
     setCart(cartItems);
   }, [cartItems]);
 
-  useEffect(() => {
-    return () => {
-      setCart([]);
-    };
-  }, []);
-
   const handleRemove = (productId) => {
     const updatedCart = cart.filter(item => item.id !== productId);
     setCart(updatedCart);
@@ -110,9 +107,12 @@ function ShoppingCart({ cartItems, handleCount, onCheckout }) {
   return (
     <ShoppingCartBlock>
       <h2>장바구니</h2>
-
+      {cart.length > 0 && <ShoppingCartHeader />}
       {cart.length === 0 ? (
-        <p>장바구니가 비어 있습니다.</p>
+       <>
+         <FiShoppingCart style={{ fontSize: '50px', color: '#333', marginBottom: '16px' }} />
+         <p>장바구니가 비어 있습니다.</p>
+      </>
       ) : (
         <ul>
           {cart.map(item => (
@@ -143,7 +143,6 @@ function ShoppingCart({ cartItems, handleCount, onCheckout }) {
           <Link to='/'>
             <button className="continue-shopping">계속 쇼핑하기</button>
           </Link>
-
           <button className="checkout" onClick={() => onCheckout()}>주문하기</button>
         </div>
       )}
