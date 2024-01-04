@@ -78,22 +78,27 @@ const LikeBox = styled.div`
     fill: #e51a92;
   }
 `;
+
 //리스트 한개를 구현할 컴포넌트
 function BestItem({id, name, price, descript, image, like, onToggle}) {
-    return (
-        <BestItemBlock>
-            <a href="#!">
-                <img src={image} alt={name} />
-                <LikeBox onClick={() => onToggle(id)}>
-                    { like ? <AiFillHeart /> : <AiOutlineHeart /> }
-                </LikeBox>
-                <HoverBox>
-                    <h4>{name}</h4>
-                    <h5>￦ {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
-                    <p>{descript}</p>
-                </HoverBox>
-            </a>
-        </BestItemBlock>
+  const handleLikeClick = (e) => {
+    e.preventDefault() 
+    onToggle(id);
+  }; 
+  return (
+      <BestItemBlock>
+          <a href="#!">
+              <img src={image} alt={name} />
+              <LikeBox onClick={handleLikeClick}>
+                {like ? <AiFillHeart /> : <AiOutlineHeart />}
+              </LikeBox>
+              <HoverBox>
+                  <h4>{name}</h4>
+                  <h5>￦ {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
+                  <p>{descript}</p>
+              </HoverBox>
+          </a>
+      </BestItemBlock>
     );
 }
 
