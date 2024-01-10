@@ -92,7 +92,7 @@ const IconBlock = styled(MdDelete)`
 `;
 
 
-function ShoppingCart({ cartItems, handleCount, onCheckout }) {
+function ShoppingCart({ cartItems, handleCount }) {
   const [cart, setCart] = useState(cartItems);
 
   useEffect(() => {
@@ -143,7 +143,7 @@ function ShoppingCart({ cartItems, handleCount, onCheckout }) {
           <Link to='/'>
             <button className="continue-shopping">계속 쇼핑하기</button>
           </Link>
-          <button className="checkout" onClick={() => onCheckout()}>주문하기</button>
+          <button className="checkout">주문하기</button>
         </div>
       )}
     </ShoppingCartBlock>
