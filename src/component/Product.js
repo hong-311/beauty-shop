@@ -7,7 +7,7 @@ import CartAlert from './cart/CartAlert';
 const ProductBlock = styled.div`
   padding: 16px;
   margin: 16px;
-  text-align: center;
+ 
 
   h2 {
     margin-bottom: 10px;
@@ -21,19 +21,23 @@ const ProductBlock = styled.div`
   }
 `;
 
-const DescriptionBlock = styled.div`
-  margin-top: 12px;
-
-  p {
-    margin-bottom: 8px;
-  }
-`;
+const TextBlock = styled.div`
+  margin-top: -35px;
+  float: right;  
+  width: 600px;
+  padding: 40px;
+  box-sizing: border-box;
+    p {
+      text-align: justify;  
+      margin-bottom: 20px;
+    }
+  `;
 
 const QuantityBlock = styled.div`
   margin-top: 16px;
+  margin-left: -10px;
   display: flex;
   align-items: center;
-  justify-content: center;
 
   button {
     font-size: 18px;
@@ -53,15 +57,23 @@ const QuantityBlock = styled.div`
 `;
 
 const TotalBlock = styled.p`
+  display: flex;
+  justify-content: flex-end;
   font-size: 20px;
   font-weight: bold;
   margin-top: 16px;
+  margin-right: 340px;
+  align-self: flex-end; 
+  position: relative;
+
 `;
+
 
 const ButtonsBlock = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 24px;
+  margin-right: 200px;
 
   button {
     font-size: 20px;
@@ -76,6 +88,7 @@ const ButtonsBlock = styled.div`
 const BuyNowButton = styled.button`
   background-color: #e51a92;
   color: #fff;
+  
 `;
 
 const AddToCartButton = styled.button`
@@ -141,18 +154,18 @@ function Product({ cartItems, setCartItems }) {
 
   return (
     <ProductBlock>
-      <h2>{name}</h2>
       <img src={image} alt="상품이미지" />
-      <DescriptionBlock>
+      <TextBlock>
+        <h2>{name}</h2>
         {descript && <p>{descript}</p>}
         <p>￦ {price.toLocaleString()}</p>
-      </DescriptionBlock>
       <QuantityBlock>
         <button onClick={() => handleCount('minus')}>-</button>
         <span>{count}</span>
         <button onClick={() => handleCount('plus')}>+</button>
       </QuantityBlock>
-      <TotalBlock>총 상품 금액: ￦ {totalAmount.toLocaleString()}</TotalBlock>
+      </TextBlock>
+      <TotalBlock>총 상품 금액 : ￦ {totalAmount.toLocaleString()}</TotalBlock>
       <ButtonsBlock>
         <BuyNowButton className="buy-now">바로구매</BuyNowButton>
         <AddToCartButton className="add-to-cart" onClick={handleAddToCart}>
